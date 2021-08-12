@@ -17,6 +17,7 @@
 # When you're done, run this server and test it from your browser using the
 # Messageboard.html form.  Then run the test.py script to check it.
 
+from email import message
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from urllib.parse import parse_qs
 
@@ -24,11 +25,12 @@ from urllib.parse import parse_qs
 class MessageHandler(BaseHTTPRequestHandler):
     def do_POST(self):
         # 1. How long was the message? (Use the Content-Length header.)
-
+        length = int(self.headers.get('content-length',0))
         # 2. Read the correct amount of data from the request.
-
+        data = self.rfile.read(length).decode()
         # 3. Extract the "message" field from the request data.
-
+        print(data)
+        message = parse_qs(data)['message'][0]
         # Send the "message" field back as the response.
         self.send_response(200)
         self.send_header('Content-type', 'text/plain; charset=utf-8')

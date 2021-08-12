@@ -30,7 +30,6 @@ class EchoHandler(BaseHTTPRequestHandler):
 
         # Now, write the response body.
         value = self.path
-        print(type(value))
         self.wfile.write((value[1:] + "\n").encode())
 
 if __name__ == '__main__':
